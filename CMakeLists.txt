@@ -42,31 +42,26 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/runme.py DESTINATION python)
 include(CheckLanguage)
 check_language(CSharp)
 if (CMAKE_CSharp_COMPILER)
-	# configure for csharp generation
-	swig_add_library(example_cs_wrapper TYPE SHARED LANGUAGE csharp SOURCES ${module_name}.i)
-	
-	# link with csharp libraries to build the csharp wrapper
-    swig_link_libraries(example_cs_wrapper cpp_example ${CSHARP_LIBRARIES})
-	
-	install(TARGETS ${SWIG_MODULE_example_cs_wrapper_REAL_NAME} RUNTIME DESTINATION csharp)
-	
-	enable_language(CSharp)
-	# create a csharp library with the generated .cs swig files
-	add_library(example SHARED $<TARGET_PROPERTY:example_cs_wrapper,EXTRA_OUTPUT>)
-	add_custom_command(
-	    TARGET example PRE_BUILD
-		COMMAND echo "EXTRA_OUTPUT $<TARGET_PROPERTY:example_cs_wrapper,EXTRA_OUTPUT>"
-	)
-	
+    # configure for csharp generation
+    swig_add_library(example_cs_wrapper TYPE SHARED LANGUAGE csharp SOURCES ${module_name}.i)
+    
+    # link with csharp libraries to build the csharp wrapper
+    swig_link_libraries(example_cs_wrapper cpp_example)
+    
+    install(TARGETS ${SWIG_MODULE_example_cs_wrapper_REAL_NAME} RUNTIME DESTINATION csharp)
+    
+    enable_language(CSharp)
+    # create a csharp library with the generated .cs swig files
+    add_library(example SHARED $<TARGET_PROPERTY:example_cs_wrapper,EXTRA_OUTPUT>)
     set_target_properties(example PROPERTIES LINKER_LANGUAGE CSharp)
     target_link_libraries(example ${SWIG_MODULE_example_cs_wrapper_REAL_NAME})
     install(TARGETS example RUNTIME DESTINATION csharp)
-	
-	# create an executable with the above csharp library
+
+    # create an executable with the above csharp library
     add_executable(runme runme.cs)
     set_target_properties(runme PROPERTIES LINKER_LANGUAGE CSharp)
     target_link_libraries(runme example)
     install(TARGETS runme RUNTIME DESTINATION csharp)
 else()
-	message(STATUS "Not building CSharp variant, as suitable compiler not found.")
+    message(STATUS "Not building CSharp variant, as suitable compiler not found.")
 endif()

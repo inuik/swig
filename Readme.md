@@ -23,7 +23,7 @@ swig.exe -csharp -c++ example.i
 cl /LD example_wrap.cxx example.cpp /link /out:example_cs_wrapper.dll
 csc -target:library example.cs examplePINVOKE.cs /out:example.dll
 csc runme.cs /reference:example.dll
-python .\runme.py
+.\runme.exe
 ```
 
 ## How to build with CMake ##
@@ -37,13 +37,11 @@ cmake --build . --target install --config Release
 
 2. Run Python swig client
 ```shell
-cd install\python
-python .\runme.py
+python .\install\python\runme.py
 ```
 
 3. Run CSharp swig client
 ```shell
-cd install\csharp
-.\runme.exe
+.\install\csharp\runme.exe
 ```
 
