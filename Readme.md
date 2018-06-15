@@ -32,7 +32,7 @@ csc runme.cs /reference:example.dll
 mkdir build
 cd build
 cmake ..
-cmake --build . --target install --config Release
+cmake --build . --target install
 ```
 
 2. Run Python swig client
