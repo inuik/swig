@@ -6,7 +6,6 @@ project(swig)
 get_filename_component(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" ABSOLUTE)
 set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}" CACHE PATH "default install path" FORCE)
 
-set(SWIG_DIR 				"${CMAKE_CURRENT_SOURCE_DIR}/external/swigwin-3.0.12" CACHE PATH "SWIG_DIR external path" FORCE)
 set(SWIG_EXECUTABLE 		"${CMAKE_CURRENT_SOURCE_DIR}/external/swigwin-3.0.12/swig.exe" CACHE PATH "SWIG_EXECUTABLE external path" FORCE)
   
 
