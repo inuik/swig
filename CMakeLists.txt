@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.12)
 
 project(swig)
 
@@ -18,7 +18,7 @@ find_package(PythonLibs REQUIRED)
 # add CMake modules in subdirs
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR})
 
-include(_UseSWIG)
+include(UseSWIG)
 include_directories( ${PYTHON_INCLUDE_DIRS} )
 
 add_library(cpp_example STATIC example.cpp)
@@ -29,10 +29,10 @@ set(module_name example)
 set_source_files_properties(${module_name}.i PROPERTIES CPLUSPLUS ON)
 
 # configure for python generation
-swig_add_library(example_py_wrapper SHARED LANGUAGE python SOURCES ${module_name}.i)
+swig_add_library(example_py_wrapper LANGUAGE python SOURCES ${module_name}.i)
 
 # link with python libraries to build the python wrapper
-swig_link_libraries(example_py_wrapper cpp_example ${PYTHON_LIBRARIES})
+target_link_libraries(example_py_wrapper cpp_example ${PYTHON_LIBRARIES})
 
 # install required files
 install(FILES $<TARGET_FILE:${SWIG_MODULE_example_py_wrapper_REAL_NAME}> DESTINATION python RENAME _${module_name}.pyd)
@@ -50,13 +50,13 @@ if (CMAKE_CSharp_COMPILER)
     swig_add_library(example_cs_wrapper TYPE SHARED LANGUAGE csharp SOURCES ${module_name}.i)
     
     # link with csharp libraries to build the csharp wrapper
-    swig_link_libraries(example_cs_wrapper cpp_example)
+    target_link_libraries(example_cs_wrapper cpp_example)
     
     install(TARGETS ${SWIG_MODULE_example_cs_wrapper_REAL_NAME} RUNTIME DESTINATION csharp)
     
     enable_language(CSharp)
     # create a csharp library with the generated .cs swig files
-    add_library(example SHARED $<TARGET_PROPERTY:example_cs_wrapper,EXTRA_OUTPUT>)
+    add_library(example SHARED $<TARGET_PROPERTY:example_cs_wrapper,SWIG_SUPPORT_FILES>)
     set_target_properties(example PROPERTIES LINKER_LANGUAGE CSharp)
     target_link_libraries(example ${SWIG_MODULE_example_cs_wrapper_REAL_NAME})
     install(TARGETS example RUNTIME DESTINATION csharp)
