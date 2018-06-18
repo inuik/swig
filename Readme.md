@@ -5,7 +5,12 @@
 * CMake.
 * Visual Studio 2017.
 * Python 2.7.
-* Locally installed [SWIG](http://www.swig.org/download.html) & added to ENV PATH.
+* Download [SWIG](http://www.swig.org/download.html) & extract the contents to \<repository root\>\external\swigwin-3.0.12.
+```shell
+  powershell Invoke-WebRequest https://cytranet.dl.sourceforge.net/project/swig/swigwin/swigwin-3.0.12/swigwin-3.0.12.zip -OutFile swigwin-3.0.12.zip
+  powershell Expand-Archive swigwin-3.0.12.zip -DestinationPath .\external
+  del swigwin-3.0.12.zip
+```
 
 ## How to build manually ##
 1. Build Python variant
