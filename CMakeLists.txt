@@ -31,9 +31,8 @@ if(Python_FOUND)
     target_link_libraries(example_py_wrapper ${Python_LIBRARIES})
 
     # rename output .pyd file name
-    set_target_properties(example_py_wrapper PROPERTIES OUTPUT_NAME example)
-    
-    # install required files
+    add_custom_command(TARGET example_py_wrapper POST_BUILD
+                       COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:example_py_wrapper> $<TARGET_FILE_DIR:example_py_wrapper>/_example.pyd)
     
     # install required files
     install(FILES $<TARGET_FILE:${SWIG_MODULE_example_py_wrapper_REAL_NAME}> DESTINATION python RENAME _example.pyd)
