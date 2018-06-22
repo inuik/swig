@@ -2,10 +2,10 @@
 
 ## Prerequisites ##
 * Windows 10.
-* CMake.
+* CMake 3.12.
 * Visual Studio 2017.
 * Python 2.7.
-* Locally installed [SWIG](http://www.swig.org/download.html) & added to ENV PATH.
+* Locally installed [SWIG 3.0.12](http://www.swig.org/download.html) & added to ENV PATH.
 
 ## How to build manually ##
 1. Build Python variant
@@ -32,16 +32,21 @@ csc runme.cs /reference:example.dll
 mkdir build
 cd build
 cmake ..
-cmake --build . --target install
+cmake --build . --target install -j
 ```
 
-2. Run Python swig client
+2. Run swig clients
+* Python
 ```shell
 python .\install\python\runme.py
 ```
 
-3. Run CSharp swig client
+* CSharp
 ```shell
 .\install\csharp\runme.exe
 ```
 
+* Alternatively run both swig clients via CTest
+```shell
+ctest -C Debug -V
+```
