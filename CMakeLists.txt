@@ -62,8 +62,8 @@ if(CMAKE_CSharp_COMPILER)
     
     enable_language(CSharp)
     # create a csharp library with the generated .cs swig files
-    set_source_files_properties( Square.cs Circle.cs Shape.cs PROPERTIES GENERATED 1)
-    add_library(example SHARED $<TARGET_PROPERTY:example_cs_wrapper,SWIG_SUPPORT_FILES> Square.cs Circle.cs Shape.cs)
+    set_source_files_properties(*.cs PROPERTIES GENERATED 1)
+    add_library(example SHARED *.cs)
     set_target_properties(example PROPERTIES LINKER_LANGUAGE CSharp)
     target_link_libraries(example example_cs_wrapper)
     install(TARGETS example RUNTIME DESTINATION csharp)
